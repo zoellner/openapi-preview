@@ -2,7 +2,7 @@
     "name": "openapi-preview",
     "displayName": "openapi-preview",
     "description": "Preview OpenAPI Docs",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "engines": {
         "vscode": "^1.29.0"
     },
