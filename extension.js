@@ -3,8 +3,7 @@
 const vscode = require('vscode');
 
 const path = require('path');
-const yaml = require('js-yaml');
-
+const refParser = require('json-schema-ref-parser');
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -62,9 +61,17 @@ function activate(context) {
 exports.activate = activate;
 
 function updateSpec(panel, doc) {
-  panel.webview.postMessage({
-    type: 'update-spec',
-    spec: JSON.stringify(yaml.load(doc.getText()))
+
+  return refParser.bundle(doc.fileName)
+  .then((bundle) => {
+    panel.webview.postMessage({
+      type: 'update-spec',
+      spec: JSON.stringify(bundle)
+    });
+  })
+  .catch((err) => {
+    console.error(err);
+    throw err;
   });
 }
 
