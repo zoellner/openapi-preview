@@ -1,7 +1,18 @@
 {
     "name": "openapi-preview",
-    "displayName": "openapi-preview",
+    "displayName": "OpenAPI Preview",
     "description": "Preview OpenAPI Docs",
+    "publisher": "zoellner",
+    "author": {
+        "name": "Andreas Zoellner",
+        "url": "https://github.com/zoellner"
+    },
+    "repository": {
+        "type" : "git",
+        "url" : "https://github.com/zoellner/openapi-preview.git"
+    },
+    "bugs": "https://github.com/zoellner/openapi-preview/issues",
+    "license": "MIT",
     "version": "1.0.0",
     "engines": {
         "vscode": "^1.29.0"
