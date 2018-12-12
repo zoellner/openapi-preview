@@ -18,7 +18,7 @@ function activate(context) {
   // The commandId parameter must match the command field in package.json
   let disposable = vscode.commands.registerCommand('extension.preview', function () {
     // The code you place here will be executed every time your command is executed
-
+    const config = vscode.workspace.getConfiguration('openApiPreview');
     const editor = vscode.window.activeTextEditor;
     const doc = editor.document;
 
@@ -40,7 +40,8 @@ function activate(context) {
     const jsSrc = jsOnDiskPath.with({scheme: 'vscode-resource'});
     const cssSrc = cssOnDiskPath.with({scheme: 'vscode-resource'});
 
-    panel.webview.html = getWebviewContent({jsSrc, cssSrc});
+    const options = Object.assign({}, config, {jsSrc, cssSrc});
+    panel.webview.html = getWebviewContent(options);
 
     panel.webview.onDidReceiveMessage(event => {
       if (event.type === 'ready') {
@@ -75,7 +76,26 @@ function updateSpec(panel, doc) {
   });
 }
 
-function getWebviewContent(path) {
+function getWebviewContent(options) {
+
+  //each config item is a string of format key: value
+  const additionalConfig = [];
+
+  if (options.displayOperationId) {
+    additionalConfig.push('displayOperationId: true');
+  }
+  if (options.deepLinking) {
+    additionalConfig.push('deepLinking: true');
+  }
+  if (options.filter) {
+    additionalConfig.push('filter: true');
+  }
+  if (options.operationsSorter && ['alpha', 'method'].includes(options.operationsSorter)) {
+    additionalConfig.push(`operationsSorter: '${options.operationsSorter}'`);
+  }
+
+  const swaggerUIAdditionalConfig = additionalConfig.join(',\n');
+
   return `
   <!DOCTYPE html>
   <html lang="en">
@@ -86,8 +106,8 @@ function getWebviewContent(path) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>OpenAPI Preview</title>
-    <script src="${path.jsSrc}"></script>
-    <link rel="stylesheet" type="text/css" href="${path.cssSrc}">
+    <script src="${options.jsSrc}"></script>
+    <link rel="stylesheet" type="text/css" href="${options.cssSrc}">
   </head>
 
   <body style="background-color: white;">
@@ -101,8 +121,8 @@ function getWebviewContent(path) {
         presets: [
           SwaggerUIBundle.presets.apis,
           SwaggerUIBundle.SwaggerUIStandalonePreset
-        ]
-
+        ],
+        ${swaggerUIAdditionalConfig}
       });
 
       window.ui = ui;
