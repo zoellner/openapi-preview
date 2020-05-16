@@ -29,19 +29,20 @@ function activate(context) {
       {
         enableScripts: true,
         localResourceRoots: [
-          vscode.Uri.file(path.join(context.extensionPath, 'node_modules', 'swagger-ui-dist'))
+          vscode.Uri.file(path.join(context.extensionPath, 'node_modules', 'swagger-ui-dist')),
+          vscode.Uri.file(path.join(context.extensionPath, 'css'))
         ]
       }
     );
 
     // And set its HTML content
-    const jsOnDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'node_modules', 'swagger-ui-dist', 'swagger-ui-bundle.js'));
-    const cssOnDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'node_modules', 'swagger-ui-dist', 'swagger-ui.css'));
-    const jsSrc = jsOnDiskPath.with({scheme: 'vscode-resource'});
-    const cssSrc = cssOnDiskPath.with({scheme: 'vscode-resource'});
+    const swaggerJsOnDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'node_modules', 'swagger-ui-dist', 'swagger-ui-bundle.js'));
+    const swaggerCssOnDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'node_modules', 'swagger-ui-dist', 'swagger-ui.css'));
 
-    const options = Object.assign({}, config, {jsSrc, cssSrc});
-    panel.webview.html = getWebviewContent(options);
+    const globalCssOnDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'css', 'global.css'));
+    const options = Object.assign({}, config, {swaggerJsOnDiskPath, swaggerCssOnDiskPath, globalCssOnDiskPath});
+
+    panel.webview.html = getWebviewContent(panel.webview, options);
 
     panel.webview.onDidReceiveMessage(event => {
       if (event.type === 'ready') {
@@ -76,7 +77,7 @@ function updateSpec(panel, doc) {
   });
 }
 
-function getWebviewContent(options) {
+function getWebviewContent(webview, options) {
 
   //each config item is a string of format key: value
   const additionalConfig = [];
@@ -96,23 +97,32 @@ function getWebviewContent(options) {
 
   const swaggerUIAdditionalConfig = additionalConfig.join(',\n');
 
+  // And the uris we use to load the script and css in the webview
+  const swaggerJsUri = webview.asWebviewUri(options.swaggerJsOnDiskPath);
+  const swaggerCssUri = webview.asWebviewUri(options.swaggerCssOnDiskPath);
+  const globalCssUri = webview.asWebviewUri(options.globalCssOnDiskPath);
+
+  // Use a nonce to whitelist which scripts can be run
+  const nonce = getNonce();
+
   return `
   <!DOCTYPE html>
   <html lang="en">
 
   <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data: vscode-resource:; script-src 'unsafe-inline' vscode-resource:; style-src 'unsafe-inline' vscode-resource:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src ${webview.cspSource} https:; script-src 'nonce-${nonce}'; style-src ${webview.cspSource};">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>OpenAPI Preview</title>
-    <script src="${options.jsSrc}"></script>
-    <link rel="stylesheet" type="text/css" href="${options.cssSrc}">
+    <script nonce="${nonce}" src="${swaggerJsUri}"></script>
+    <link rel="stylesheet" type="text/css" href="${swaggerCssUri}">
+    <link rel="stylesheet" type="text/css" href="${globalCssUri}">
   </head>
 
-  <body style="background-color: white;">
+  <body>
     <div id="swagger-ui"></div>
-    <script>
+    <script nonce="${nonce}">
       const vscode = acquireVsCodeApi();
       const ui = SwaggerUIBundle({
         dom_id: '#swagger-ui',
@@ -141,6 +151,15 @@ function getWebviewContent(options) {
   </html>
 
   `;
+}
+
+function getNonce() {
+  let text = '';
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  for (let i = 0; i < 32; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
 }
 
 // this method is called when your extension is deactivated
