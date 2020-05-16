@@ -5,7 +5,7 @@ OpenAPI Format 3.0
 
 ## Features
 
-* Displays API docs in a build in web paenl using [SwaggerUI](https://github.com/swagger-api/swagger-ui).
+* Displays API docs in a build in web panel using [SwaggerUI](https://github.com/swagger-api/swagger-ui).
 
 
 ## Usage
