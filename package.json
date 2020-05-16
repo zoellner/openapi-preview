@@ -71,13 +71,13 @@
   },
   "devDependencies": {
     "@types/mocha": "^7.0.2",
-    "@types/node": "^13.11.0",
-    "eslint": "^6.8.0",
-    "typescript": "^3.8.3",
-    "vscode": "^1.1.36"
+    "@types/node": "^14.0.1",
+    "eslint": "^7.0.0",
+    "typescript": "^3.9.2",
+    "vscode": "^1.1.37"
   },
   "dependencies": {
-    "json-schema-ref-parser": "^7.1.4",
-    "swagger-ui-dist": "^3.25.0"
+    "json-schema-ref-parser": "^9.0.1",
+    "swagger-ui-dist": "^3.25.3"
   }
 }
