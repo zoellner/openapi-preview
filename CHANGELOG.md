@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the "openapi-preview" extension will be documented in this file.
 
+## [1.7.2]
+## [1.7.1]
+- Dependency updates
 ## [1.7.0]
 - Update to newer VS Code Webview API [#3](https://github.com/zoellner/openapi-preview/issues/3)
 - Dependency updates
