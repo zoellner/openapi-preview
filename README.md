@@ -11,4 +11,4 @@ OpenAPI Format 3.0
 ## Usage
 
 * Open the main *OpenAPI YAML file*.
-* Run the Command `⇧⌘P` **OpenAPI Preview**.
+* Run the Command `⇧⌘P` (on Mac) or `Ctrl+Shift+P` (on Windows) **OpenAPI Preview**.
