@@ -29,18 +29,18 @@ function activate(context) {
       {
         enableScripts: true,
         localResourceRoots: [
-          vscode.Uri.file(path.join(context.extensionPath, 'node_modules', 'swagger-ui-dist')),
+          vscode.Uri.file(path.join(context.extensionPath, 'node_modules', '@stoplight')),
           vscode.Uri.file(path.join(context.extensionPath, 'css'))
         ]
       }
     );
 
     // And set its HTML content
-    const swaggerJsOnDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'node_modules', 'swagger-ui-dist', 'swagger-ui-bundle.js'));
-    const swaggerCssOnDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'node_modules', 'swagger-ui-dist', 'swagger-ui.css'));
+    const elementsJsOnDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'node_modules', '@stoplight', 'elements', 'web-components.min.js'));
+    const elementsCssOnDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'node_modules', '@stoplight', 'elements', 'styles.min.css'));
 
     const globalCssOnDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'css', 'global.css'));
-    const options = Object.assign({}, config, {swaggerJsOnDiskPath, swaggerCssOnDiskPath, globalCssOnDiskPath});
+    const options = Object.assign({}, config, {elementsJsOnDiskPath, elementsCssOnDiskPath, globalCssOnDiskPath});
 
     panel.webview.html = getWebviewContent(panel.webview, options);
 
@@ -63,7 +63,6 @@ function activate(context) {
 exports.activate = activate;
 
 function updateSpec(panel, doc) {
-
   return refParser.bundle(doc.fileName)
   .then((bundle) => {
     panel.webview.postMessage({
@@ -79,29 +78,12 @@ function updateSpec(panel, doc) {
 
 function getWebviewContent(webview, options) {
 
-  //each config item is a string of format key: value
-  const additionalConfig = [];
-
-  if (options.displayOperationId) {
-    additionalConfig.push('displayOperationId: true');
-  }
-  if (options.deepLinking) {
-    additionalConfig.push('deepLinking: true');
-  }
-  if (options.filter) {
-    additionalConfig.push('filter: true');
-  }
-  if (options.operationsSorter && ['alpha', 'method'].includes(options.operationsSorter)) {
-    additionalConfig.push(`operationsSorter: '${options.operationsSorter}'`);
-  }
-
-  const swaggerUIAdditionalConfig = additionalConfig.join(',\n');
-
   // And the uris we use to load the script and css in the webview
-  const swaggerJsUri = webview.asWebviewUri(options.swaggerJsOnDiskPath);
-  const swaggerCssUri = webview.asWebviewUri(options.swaggerCssOnDiskPath);
+  const elementsJsUri = webview.asWebviewUri(options.elementsJsOnDiskPath);
+  const elementsCssUri = webview.asWebviewUri(options.elementsCssOnDiskPath);
   const globalCssUri = webview.asWebviewUri(options.globalCssOnDiskPath);
 
+  const inlineCssSha = 'sha256-UTjtaAWWTyzFjRKbltk24jHijlTbP20C1GUYaWPqg7E=';
   // Use a nonce to whitelist which scripts can be run
   const nonce = getNonce();
 
@@ -111,34 +93,25 @@ function getWebviewContent(webview, options) {
 
   <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src ${webview.cspSource} https:; script-src 'nonce-${nonce}'; style-src ${webview.cspSource};">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src ${webview.cspSource} https:; script-src 'nonce-${nonce}'; style-src '${inlineCssSha}' ${webview.cspSource};">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>OpenAPI Preview</title>
-    <script nonce="${nonce}" src="${swaggerJsUri}"></script>
-    <link rel="stylesheet" type="text/css" href="${swaggerCssUri}">
+    <!-- Embed elements Elements via Web Component -->
+    <script nonce="${nonce}" src="${elementsJsUri}"></script>
+    <link rel="stylesheet" type="text/css" href="${elementsCssUri}">
     <link rel="stylesheet" type="text/css" href="${globalCssUri}">
   </head>
 
   <body>
-    <div id="swagger-ui"></div>
+    <elements-api id="docs" router="hash" layout="stacked" hideTryIt="true"/>
     <script nonce="${nonce}">
       const vscode = acquireVsCodeApi();
-      const ui = SwaggerUIBundle({
-        dom_id: '#swagger-ui',
-        spec: '{}',
+      const docs = document.getElementById('docs');
 
-        presets: [
-          SwaggerUIBundle.presets.apis,
-          SwaggerUIBundle.SwaggerUIStandalonePreset
-        ],
-        ${swaggerUIAdditionalConfig}
-      });
-
-      window.ui = ui;
       window.addEventListener('message', event => {
         if (event.data.type === 'update-spec') {
-          ui.specActions.updateSpec(event.data.spec);
+          docs.apiDescriptionDocument = event.data.spec;
         }
       });
 

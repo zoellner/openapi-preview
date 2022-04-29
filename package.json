@@ -31,53 +31,21 @@
         "title": "OpenAPI Preview"
       }
     ],
-    "configuration": [
-      {
-        "title": "OpenAPI Preview Configuration",
-        "type": "object",
-        "properties": {
-          "openApiPreview.displayOperationId": {
-            "type": "boolean",
-            "default": false,
-            "description": "Controls the display of operationId in operations list, default: false. See Swagger UI displayOperationId option"
-          },
-          "openApiPreview.deepLinking": {
-            "type": "boolean",
-            "default": false,
-            "description": "If set to true, enables deep linking for tags and operations, default: false. See Swagger UI deepLinking option"
-          },
-          "openApiPreview.filter": {
-            "type": "boolean",
-            "default": false,
-            "description": "If set, enables filtering. The top bar will show an edit box that you can use to filter the tagged operations that are shown, default: false. See Swagger UI deepLinking option"
-          },
-          "openApiPreview.operationsSorter": {
-            "type": "string",
-            "default": "default",
-            "enum": [
-              "default",
-              "alpha",
-              "method"
-            ],
-            "description": "Apply a sort to the operation list of each API. It can be 'alpha' (sort by paths alphanumerically), 'method' (sort by HTTP method), or 'default' which is the order returned by the server unchanged. See Swagger UI operationsSorter option"
-          }
-        }
-      }
-    ]
+    "configuration": []
   },
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "node ./node_modules/vscode/bin/test"
   },
   "devDependencies": {
-    "@types/mocha": "^9.0.0",
-    "@types/node": "^16.11.13",
-    "eslint": "^8.4.1",
-    "typescript": "^4.5.4",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^16.11.32",
+    "eslint": "^8.14.0",
+    "typescript": "^4.6.4",
     "vscode": "^1.1.37"
   },
   "dependencies": {
-    "json-schema-ref-parser": "^9.0.9",
-    "swagger-ui-dist": "^4.1.3"
+    "@stoplight/elements": "^7.5.18",
+    "json-schema-ref-parser": "^9.0.9"
   }
 }

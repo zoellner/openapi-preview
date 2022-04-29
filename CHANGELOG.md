@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to the "openapi-preview" extension will be documented in this file.
 
+## [2.0.0]
+### Breaking Change
+- Support for OpenAPI 3.1.x
+- Switched from Swagger UI to Spotlight Elements
+
 ## [1.7.3]
 ## [1.7.2]
 ## [1.7.1]
