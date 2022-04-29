@@ -21,17 +21,16 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.preview"
+    "onCommand:openapiPreview.open"
   ],
   "main": "./extension",
   "contributes": {
     "commands": [
       {
-        "command": "extension.preview",
+        "command": "openapiPreview.open",
         "title": "OpenAPI Preview"
       }
-    ],
-    "configuration": []
+    ]
   },
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install",

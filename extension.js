@@ -16,9 +16,9 @@ function activate(context) {
   // The command has been defined in the package.json file
   // Now provide the implementation of the command with  registerCommand
   // The commandId parameter must match the command field in package.json
-  let disposable = vscode.commands.registerCommand('extension.preview', function () {
+  let disposable = vscode.commands.registerCommand('openapiPreview.open', function () {
     // The code you place here will be executed every time your command is executed
-    const config = vscode.workspace.getConfiguration('openApiPreview');
+    // const config = vscode.workspace.getConfiguration('openApiPreview');
     const editor = vscode.window.activeTextEditor;
     const doc = editor.document;
 
@@ -40,7 +40,7 @@ function activate(context) {
     const elementsCssOnDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'node_modules', '@stoplight', 'elements', 'styles.min.css'));
 
     const globalCssOnDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'css', 'global.css'));
-    const options = Object.assign({}, config, {elementsJsOnDiskPath, elementsCssOnDiskPath, globalCssOnDiskPath});
+    const options = Object.assign({}, {elementsJsOnDiskPath, elementsCssOnDiskPath, globalCssOnDiskPath});
 
     panel.webview.html = getWebviewContent(panel.webview, options);
 
