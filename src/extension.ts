@@ -68,19 +68,19 @@ function getWebviewOptions(extensionUri: vscode.Uri): vscode.WebviewOptions {
 function updateSpec(panel: vscode.WebviewPanel, doc: vscode.TextDocument | undefined) {
   if (!doc) {return;}
   return $RefParser.bundle(doc.fileName)
-  .then((bundle) => {
+  .then((bundle: any) => {
     panel.webview.postMessage({
       type: 'update-spec',
       spec: JSON.stringify(bundle)
     });
   })
-  .catch((err) => {
+  .catch((err: any) => {
     console.error(err);
     throw err;
   });
 }
 
-function getWebviewContent(webview: vscode.Webview, options) {
+function getWebviewContent(webview: vscode.Webview, options: any) {
 
   // And the uris we use to load the script and css in the webview
   const elementsJsUri = webview.asWebviewUri(options.elementsJsOnDiskPath);
