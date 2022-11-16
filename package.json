@@ -7,6 +7,9 @@
     "name": "Andreas Zoellner",
     "url": "https://github.com/zoellner"
   },
+  "sponsor": {
+    "url": "https://github.com/sponsors/zoellner"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/zoellner/openapi-preview.git"
@@ -39,16 +42,16 @@
     "watch": "tsc -watch -p ./"
   },
   "devDependencies": {
-    "@types/node": "^16.11.32",
-    "@types/vscode": "^1.47.0",
+    "@types/node": "^16.18.3",
+    "@types/vscode": "^1.73.1",
     "@types/vscode-webview": "^1.57.0",
-    "@typescript-eslint/eslint-plugin": "^5.21.0",
-    "@typescript-eslint/parser": "^5.21.0",
-    "eslint": "^8.14.0",
-    "typescript": "^4.6.4"
+    "@typescript-eslint/eslint-plugin": "^5.43.0",
+    "@typescript-eslint/parser": "^5.43.0",
+    "eslint": "^8.27.0",
+    "typescript": "^4.9.3"
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^9.0.9",
-    "@stoplight/elements": "^7.5.18"
+    "@stoplight/elements": "^7.7.5"
   }
 }
