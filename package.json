@@ -16,7 +16,7 @@
   },
   "bugs": "https://github.com/zoellner/openapi-preview/issues",
   "license": "MIT",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "engines": {
     "vscode": "^1.63.0"
   },
