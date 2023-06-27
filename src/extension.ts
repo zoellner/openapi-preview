@@ -87,7 +87,7 @@ function getWebviewContent(webview: vscode.Webview, options: any) {
   const elementsCssUri = webview.asWebviewUri(options.elementsCssOnDiskPath);
   const globalCssUri = webview.asWebviewUri(options.globalCssOnDiskPath);
 
-  const inlineCssSha = 'sha256-UTjtaAWWTyzFjRKbltk24jHijlTbP20C1GUYaWPqg7E=';
+  const inlineCssSha = 'sha256-MBVp6JYxbC/wICelYC6eULCRpgi9kGezXXSaq/TS2+I=';
   // Use a nonce to whitelist which scripts can be run
   const nonce = getNonce();
 
@@ -98,7 +98,7 @@ function getWebviewContent(webview: vscode.Webview, options: any) {
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src ${webview.cspSource} https:; script-src 'nonce-${nonce}'; style-src '${inlineCssSha}' ${webview.cspSource};">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>OpenAPI Preview</title>
     <!-- Embed elements Elements via Web Component -->
