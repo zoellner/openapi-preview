@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the "openapi-preview" extension will be documented in this file.
 
+## [2.1.3]
+- Bugfix
+
 ## [2.1.2]
 - Dependency updates
 
