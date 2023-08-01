@@ -45,7 +45,7 @@ function activate(context) {
         // const config = vscode.workspace.getConfiguration('openApiPreview');
         const doc = vscode.window.activeTextEditor?.document;
         const panel = vscode.window.createWebviewPanel('openapiPreview', // Identifies the type of the webview. Used internally
-        "OpenAPI Preview", // Title of the panel displayed to the user
+        ['OpenAPI Preview', doc?.fileName].filter(Boolean).join(' - '), // Title of the panel displayed to the user
         vscode.ViewColumn.Two, // Editor column to show the new webview panel in.
         getWebviewOptions(context.extensionUri));
         // And set its HTML content
