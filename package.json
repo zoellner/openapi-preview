@@ -36,11 +36,11 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "npm run copy-elements && npm run compile",
+    "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "lint": "eslint . --ext .ts,.tsx",
     "watch": "tsc -watch -p ./",
-    "copy-elements": "mkdir -p ./out/node_modules/@stoplight/elements/ && cp node_modules/@stoplight/elements/{web-components.min.js,styles.min.css} ./out/node_modules/@stoplight/elements/"
+    "postinstall": "cp node_modules/@stoplight/elements/{web-components.min.js,styles.min.css} ./media"
   },
   "devDependencies": {
     "@stoplight/elements": "^7.7.18",

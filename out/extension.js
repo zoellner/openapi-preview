@@ -49,9 +49,9 @@ function activate(context) {
         vscode.ViewColumn.Two, // Editor column to show the new webview panel in.
         getWebviewOptions(context.extensionUri));
         // And set its HTML content
-        const elementsJsOnDiskPath = vscode.Uri.joinPath(context.extensionUri, 'node_modules', '@stoplight', 'elements', 'web-components.min.js');
-        const elementsCssOnDiskPath = vscode.Uri.joinPath(context.extensionUri, 'node_modules', '@stoplight', 'elements', 'styles.min.css');
-        const globalCssOnDiskPath = vscode.Uri.joinPath(context.extensionUri, 'css', 'global.css');
+        const elementsJsOnDiskPath = vscode.Uri.joinPath(context.extensionUri, 'media', 'web-components.min.js');
+        const elementsCssOnDiskPath = vscode.Uri.joinPath(context.extensionUri, 'media', 'styles.min.css');
+        const globalCssOnDiskPath = vscode.Uri.joinPath(context.extensionUri, 'media', 'global.css');
         const options = Object.assign({}, { elementsJsOnDiskPath, elementsCssOnDiskPath, globalCssOnDiskPath });
         panel.webview.html = getWebviewContent(panel.webview, options);
         panel.webview.onDidReceiveMessage(event => {
@@ -74,8 +74,7 @@ function getWebviewOptions(extensionUri) {
         enableScripts: true,
         // And restrict the webview to only loading content from our extension's `media` directory.
         localResourceRoots: [
-            vscode.Uri.joinPath(extensionUri, 'node_modules', '@stoplight'),
-            vscode.Uri.joinPath(extensionUri, 'css')
+            vscode.Uri.joinPath(extensionUri, 'media')
         ]
     };
 }
