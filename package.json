@@ -36,12 +36,14 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
+    "vscode:prepublish": "npm run copy-elements && npm run compile",
     "compile": "tsc -p ./",
     "lint": "eslint . --ext .ts,.tsx",
-    "watch": "tsc -watch -p ./"
+    "watch": "tsc -watch -p ./",
+    "copy-elements": "mkdir -p ./out/node_modules/@stoplight/elements/ && cp node_modules/@stoplight/elements/{web-components.min.js,styles.min.css} ./out/node_modules/@stoplight/elements/"
   },
   "devDependencies": {
+    "@stoplight/elements": "^7.7.18",
     "@types/node": "^16.18.3",
     "@types/vscode": "^1.73.1",
     "@types/vscode-webview": "^1.57.0",
@@ -51,7 +53,6 @@
     "typescript": "^4.9.3"
   },
   "dependencies": {
-    "@apidevtools/json-schema-ref-parser": "^9.0.9",
-    "@stoplight/elements": "^7.7.18"
+    "@apidevtools/json-schema-ref-parser": "^9.0.9"
   }
 }

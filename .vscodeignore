@@ -1,9 +1,9 @@
-.vscode/**
-.vscode-test/**
-test/**
+.vscode
+.vscode-test
+src/
+tsconfig.json
 .gitignore
-**/*.map
-**/.eslintrc.js
-**/*.ts
-**/tsconfig.json
-!file.ts
+.github
+node_modules
+!node_modules/@stoplight/elements/web-components.min.js
+!node_modules/@stoplight/elements/style.min.css
