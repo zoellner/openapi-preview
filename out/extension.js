@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.activate = void 0;
+exports.activate = activate;
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 const vscode = __importStar(require("vscode"));
@@ -67,7 +67,6 @@ function activate(context) {
         });
     }));
 }
-exports.activate = activate;
 function getWebviewOptions(extensionUri) {
     return {
         // Enable javascript in the webview
@@ -94,6 +93,7 @@ function updateSpec(panel, doc) {
         throw err;
     });
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getWebviewContent(webview, options) {
     // And the uris we use to load the script and css in the webview
     const elementsJsUri = webview.asWebviewUri(options.elementsJsOnDiskPath);

@@ -24,6 +24,9 @@
     "Other"
   ],
   "main": "./out/extension.js",
+  "activationEvents": [
+    "onCommand:openapiPreview.open"
+  ],
   "contributes": {
     "commands": [
       {
