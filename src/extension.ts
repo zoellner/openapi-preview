@@ -67,18 +67,19 @@ function getWebviewOptions(extensionUri: vscode.Uri): vscode.WebviewOptions {
 function updateSpec(panel: vscode.WebviewPanel, doc: vscode.TextDocument | undefined) {
   if (!doc) {return;}
   return $RefParser.bundle(doc.fileName)
-  .then((bundle: any) => {
+  .then((bundle: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
     panel.webview.postMessage({
       type: 'update-spec',
       spec: JSON.stringify(bundle)
     });
   })
-  .catch((err: any) => {
+  .catch((err: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
     console.error(err);
     throw err;
   });
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getWebviewContent(webview: vscode.Webview, options: any) {
 
   // And the uris we use to load the script and css in the webview
