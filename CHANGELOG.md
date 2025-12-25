@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the "openapi-preview" extension will be documented in this file.
 
+## [2.3.1]
+- Dependency updates
+
 ## [2.3.0]
 - Dependency updates including major versions of eslint and @stoplight/elements
 
