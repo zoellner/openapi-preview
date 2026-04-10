@@ -43,13 +43,14 @@
     "postinstall": "cp node_modules/@stoplight/elements/{web-components.min.js,styles.min.css} ./media"
   },
   "devDependencies": {
-    "@stoplight/elements": "^8.5.2",
-    "@types/node": "^20.14.10",
+    "@stoplight/elements": "^9.0.16",
+    "@types/node": "^22.0.0",
     "@types/vscode": "^1.73.1",
     "@types/vscode-webview": "^1.57.0",
-    "eslint": "^9.6.0",
-    "typescript": "^5.5.3",
-    "typescript-eslint": "^8.0.0-alpha.41"
+    "eslint": "^10.2.0",
+    "typescript": "^6.0.2",
+    "@eslint/js": "^10.0.1",
+    "typescript-eslint": "^8.58.1"
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^9.0.9"
