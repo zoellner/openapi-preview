@@ -57,6 +57,7 @@
   },
   "overrides": {
     "@sentry/browser": "^7.119.1",
-    "@sentry/react": "^7.119.1"
+    "@sentry/react": "^7.119.1",
+    "lodash": "^4.18.0"
   }
 }
