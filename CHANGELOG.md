@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the "openapi-preview" extension will be documented in this file.
 
+## [2.3.2]
+- Dependency updates to address npm audit vulnerabilities
+
 ## [2.3.1]
 - Dependency updates
 
