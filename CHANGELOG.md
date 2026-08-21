@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to the "openapi-preview" extension will be documented in this file.
 
+## [2.4.0]
+- Switched linting from eslint to oxlint
+- Dependency updates including TypeScript 7 and @stoplight/elements 9.0.24
+- Dependency overrides to address npm audit vulnerabilities
+
 ## [2.3.2]
 - Dependency updates to address npm audit vulnerabilities
 
